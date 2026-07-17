@@ -1,0 +1,50 @@
+// Include CUPS system definitions
+#include <font.defs>
+#include <media.defs>
+#include <raster.defs>
+
+// Driver Version and Licensing Information
+Version "1.0"
+DriverType label
+ModelNumber 0x01
+ColorDevice No
+Throughput 8
+Manufacturer "Seiko"
+Font *
+
+// Force CUPS to route raster data through your custom C binary
+Filter application/vnd.cups-raster 0 rastertoescpos
+
+// Printer Profiles
+{
+  ModelName "Seiko L465"
+  PCFileName "seikol465.ppd"
+
+  // Margins set to physical zero to map head pixels directly
+  HWMargins 0 0 0 0
+  
+  // Set boundaries for dynamic thermal layouts (in points)
+  VariablePaperSize Yes
+  MinSize 63 29
+  MaxSize 307 759.6
+
+  // Custom Page Size Mappings (DPI 300 / 1 inch = 72 points)
+  // Height limited strictly to 273mm / 3165px -> 759.6 points
+  // Syntax: CustomMedia "Name/Display Name" Width Height Left Bottom Right Top "size-code" "region-code"
+  CustomMedia "Roll57mm/57mm Roll (416px x 3165px Max)" 100 759.6 0 0 0 0 "<</PageSize[100 759.6]>>setpagedevice" "<</PageSize[100 759.6]>>setpagedevice"
+  CustomMedia "Roll80mmSafe/80mm Roll (Safe 904px x 3165px Max)" 217 759.6 0 0 0 0 "<</PageSize[217 759.6]>>setpagedevice" "<</PageSize[217 759.6]>>setpagedevice"
+  CustomMedia "Roll80mmFull/80mm Roll (Full 944px x 3165px Max)" 226.5 759.6 0 0 0 0 "<</PageSize[226.5 759.6]>>setpagedevice" "<</PageSize[226.5 759.6]>>setpagedevice"
+  CustomMedia "Roll96mm/96mm Roll (1120px x 3165px Max)" 269 759.6 0 0 0 0 "<</PageSize[269 759.6]>>setpagedevice" "<</PageSize[269 759.6]>>setpagedevice"
+  CustomMedia "Roll102mm/102mm Roll (1152px x 3165px Max)" 276.5 759.6 0 0 0 0 "<</PageSize[276.5 759.6]>>setpagedevice" "<</PageSize[276.5 759.6]>>setpagedevice"
+  CustomMedia "Roll105mm/105mm Roll (1184px x 3165px Max)" 284 759.6 0 0 0 0 "<</PageSize[284 759.6]>>setpagedevice" "<</PageSize[284 759.6]>>setpagedevice"
+  CustomMedia "Roll110mm/110mm Roll (1224px x 3165px Max)" 294 759.6 0 0 0 0 "<</PageSize[294 759.6]>>setpagedevice" "<</PageSize[294 759.6]>>setpagedevice"
+  CustomMedia "Roll112mm/112mm Roll (1248px x 3165px Max)" 300 759.6 0 0 0 0 "<</PageSize[300 759.6]>>setpagedevice" "<</PageSize[300 759.6]>>setpagedevice"
+  *CustomMedia "Roll115mm/115mm Roll (Max 1280px x 3165px Max)" 307 759.6 0 0 0 0 "<</PageSize[307 759.6]>>setpagedevice" "<</PageSize[307 759.6]>>setpagedevice"
+
+  // Resolution setting forced to output 1-bit Grayscale (Dithered Black & White)
+  *Resolution k 1 1 0 0 "300dpi/300 DPI Black & White"
+
+  // USB Auto-detection & Device IDs
+  Attribute "1284DeviceID" "" "MFG:Seiko Instruments;MDL:SII MPU-L465;"
+  Attribute "cupsDeviceURI" "" "usb://0619/0109"
+}

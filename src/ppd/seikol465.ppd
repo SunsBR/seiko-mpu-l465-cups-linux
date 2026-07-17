@@ -1,0 +1,126 @@
+*PPD-Adobe: "4.3"
+*%%%% PPD file for Seiko L465 with CUPS.
+*%%%% Created by the CUPS PPD Compiler CUPS v2.4.2.
+*FormatVersion: "4.3"
+*FileVersion: "1.0"
+*LanguageVersion: English
+*LanguageEncoding: ISOLatin1
+*PCFileName: "seikol465.ppd"
+*Product: "(Seiko L465)"
+*Manufacturer: "Seiko"
+*ModelName: "Seiko L465"
+*ShortNickName: "Seiko L465"
+*NickName: "Seiko L465, 1.0"
+*PSVersion: "(3010.000) 0"
+*LanguageLevel: "3"
+*ColorDevice: False
+*DefaultColorSpace: Gray
+*FileSystem: False
+*Throughput: "8"
+*LandscapeOrientation: Plus90
+*TTRasterizer: Type42
+*% Driver-defined attributes...
+*1284DeviceID: "MFG:Seiko Instruments;MDL:SII MPU-L465;"
+*cupsDeviceURI: "usb://0619/0109"
+*cupsVersion: 2.4
+*cupsModelNumber: 1
+*cupsManualCopies: False
+*cupsFilter: "application/vnd.cups-raster 0 rastertoescpos"
+*cupsLanguages: "en"
+*OpenUI *PageSize/Media Size: PickOne
+*OrderDependency: 10 AnySetup *PageSize
+*DefaultPageSize: Roll115mm
+*PageSize Roll57mm/57mm Roll (416px x 3165px Max): "<</PageSize[100 759.6]>>setpagedevice"
+*PageSize Roll80mmSafe/80mm Roll (Safe 904px x 3165px Max): "<</PageSize[217 759.6]>>setpagedevice"
+*PageSize Roll80mmFull/80mm Roll (Full 944px x 3165px Max): "<</PageSize[226.5 759.6]>>setpagedevice"
+*PageSize Roll96mm/96mm Roll (1120px x 3165px Max): "<</PageSize[269 759.6]>>setpagedevice"
+*PageSize Roll102mm/102mm Roll (1152px x 3165px Max): "<</PageSize[276.5 759.6]>>setpagedevice"
+*PageSize Roll105mm/105mm Roll (1184px x 3165px Max): "<</PageSize[284 759.6]>>setpagedevice"
+*PageSize Roll110mm/110mm Roll (1224px x 3165px Max): "<</PageSize[294 759.6]>>setpagedevice"
+*PageSize Roll112mm/112mm Roll (1248px x 3165px Max): "<</PageSize[300 759.6]>>setpagedevice"
+*PageSize Roll115mm/115mm Roll (Max 1280px x 3165px Max): "<</PageSize[307 759.6]>>setpagedevice"
+*CloseUI: *PageSize
+*OpenUI *PageRegion/Media Size: PickOne
+*OrderDependency: 10 AnySetup *PageRegion
+*DefaultPageRegion: Roll115mm
+*PageRegion Roll57mm/57mm Roll (416px x 3165px Max): "<</PageSize[100 759.6]>>setpagedevice"
+*PageRegion Roll80mmSafe/80mm Roll (Safe 904px x 3165px Max): "<</PageSize[217 759.6]>>setpagedevice"
+*PageRegion Roll80mmFull/80mm Roll (Full 944px x 3165px Max): "<</PageSize[226.5 759.6]>>setpagedevice"
+*PageRegion Roll96mm/96mm Roll (1120px x 3165px Max): "<</PageSize[269 759.6]>>setpagedevice"
+*PageRegion Roll102mm/102mm Roll (1152px x 3165px Max): "<</PageSize[276.5 759.6]>>setpagedevice"
+*PageRegion Roll105mm/105mm Roll (1184px x 3165px Max): "<</PageSize[284 759.6]>>setpagedevice"
+*PageRegion Roll110mm/110mm Roll (1224px x 3165px Max): "<</PageSize[294 759.6]>>setpagedevice"
+*PageRegion Roll112mm/112mm Roll (1248px x 3165px Max): "<</PageSize[300 759.6]>>setpagedevice"
+*PageRegion Roll115mm/115mm Roll (Max 1280px x 3165px Max): "<</PageSize[307 759.6]>>setpagedevice"
+*CloseUI: *PageRegion
+*DefaultImageableArea: Roll115mm
+*ImageableArea Roll57mm/57mm Roll (416px x 3165px Max): "0 0 100 759.599975585938"
+*ImageableArea Roll80mmSafe/80mm Roll (Safe 904px x 3165px Max): "0 0 217 759.599975585938"
+*ImageableArea Roll80mmFull/80mm Roll (Full 944px x 3165px Max): "0 0 226.5 759.599975585938"
+*ImageableArea Roll96mm/96mm Roll (1120px x 3165px Max): "0 0 269 759.599975585938"
+*ImageableArea Roll102mm/102mm Roll (1152px x 3165px Max): "0 0 276.5 759.599975585938"
+*ImageableArea Roll105mm/105mm Roll (1184px x 3165px Max): "0 0 284 759.599975585938"
+*ImageableArea Roll110mm/110mm Roll (1224px x 3165px Max): "0 0 294 759.599975585938"
+*ImageableArea Roll112mm/112mm Roll (1248px x 3165px Max): "0 0 300 759.599975585938"
+*ImageableArea Roll115mm/115mm Roll (Max 1280px x 3165px Max): "0 0 307 759.599975585938"
+*DefaultPaperDimension: Roll115mm
+*PaperDimension Roll57mm/57mm Roll (416px x 3165px Max): "100 759.599975585938"
+*PaperDimension Roll80mmSafe/80mm Roll (Safe 904px x 3165px Max): "217 759.599975585938"
+*PaperDimension Roll80mmFull/80mm Roll (Full 944px x 3165px Max): "226.5 759.599975585938"
+*PaperDimension Roll96mm/96mm Roll (1120px x 3165px Max): "269 759.599975585938"
+*PaperDimension Roll102mm/102mm Roll (1152px x 3165px Max): "276.5 759.599975585938"
+*PaperDimension Roll105mm/105mm Roll (1184px x 3165px Max): "284 759.599975585938"
+*PaperDimension Roll110mm/110mm Roll (1224px x 3165px Max): "294 759.599975585938"
+*PaperDimension Roll112mm/112mm Roll (1248px x 3165px Max): "300 759.599975585938"
+*PaperDimension Roll115mm/115mm Roll (Max 1280px x 3165px Max): "307 759.599975585938"
+*MaxMediaWidth: "307"
+*MaxMediaHeight: "759.599975585938"
+*HWMargins: 0 0 0 0
+*CustomPageSize True: "pop pop pop <</PageSize[5 -2 roll]/ImagingBBox null>>setpagedevice"
+*ParamCustomPageSize Width: 1 points 63 307
+*ParamCustomPageSize Height: 2 points 29 759.599975585938
+*ParamCustomPageSize WidthOffset: 3 points 0 0
+*ParamCustomPageSize HeightOffset: 4 points 0 0
+*ParamCustomPageSize Orientation: 5 int 0 0
+*OpenUI *Resolution/Resolution: PickOne
+*OrderDependency: 10 AnySetup *Resolution
+*DefaultResolution: 300dpi
+*Resolution 300dpi/300 DPI Black & White: "<</HWResolution[300 300]/cupsBitsPerColor 1/cupsRowCount 1/cupsRowFeed 0/cupsRowStep 0/cupsColorSpace 3>>setpagedevice"
+*CloseUI: *Resolution
+*DefaultFont: Courier
+*Font AvantGarde-Book: Standard "(1.05)" Standard ROM
+*Font AvantGarde-BookOblique: Standard "(1.05)" Standard ROM
+*Font AvantGarde-Demi: Standard "(1.05)" Standard ROM
+*Font AvantGarde-DemiOblique: Standard "(1.05)" Standard ROM
+*Font Bookman-Demi: Standard "(1.05)" Standard ROM
+*Font Bookman-DemiItalic: Standard "(1.05)" Standard ROM
+*Font Bookman-Light: Standard "(1.05)" Standard ROM
+*Font Bookman-LightItalic: Standard "(1.05)" Standard ROM
+*Font Courier: Standard "(1.05)" Standard ROM
+*Font Courier-Bold: Standard "(1.05)" Standard ROM
+*Font Courier-BoldOblique: Standard "(1.05)" Standard ROM
+*Font Courier-Oblique: Standard "(1.05)" Standard ROM
+*Font Helvetica: Standard "(1.05)" Standard ROM
+*Font Helvetica-Bold: Standard "(1.05)" Standard ROM
+*Font Helvetica-BoldOblique: Standard "(1.05)" Standard ROM
+*Font Helvetica-Narrow: Standard "(1.05)" Standard ROM
+*Font Helvetica-Narrow-Bold: Standard "(1.05)" Standard ROM
+*Font Helvetica-Narrow-BoldOblique: Standard "(1.05)" Standard ROM
+*Font Helvetica-Narrow-Oblique: Standard "(1.05)" Standard ROM
+*Font Helvetica-Oblique: Standard "(1.05)" Standard ROM
+*Font NewCenturySchlbk-Bold: Standard "(1.05)" Standard ROM
+*Font NewCenturySchlbk-BoldItalic: Standard "(1.05)" Standard ROM
+*Font NewCenturySchlbk-Italic: Standard "(1.05)" Standard ROM
+*Font NewCenturySchlbk-Roman: Standard "(1.05)" Standard ROM
+*Font Palatino-Bold: Standard "(1.05)" Standard ROM
+*Font Palatino-BoldItalic: Standard "(1.05)" Standard ROM
+*Font Palatino-Italic: Standard "(1.05)" Standard ROM
+*Font Palatino-Roman: Standard "(1.05)" Standard ROM
+*Font Symbol: Special "(001.005)" Special ROM
+*Font Times-Bold: Standard "(1.05)" Standard ROM
+*Font Times-BoldItalic: Standard "(1.05)" Standard ROM
+*Font Times-Italic: Standard "(1.05)" Standard ROM
+*Font Times-Roman: Standard "(1.05)" Standard ROM
+*Font ZapfChancery-MediumItalic: Standard "(1.05)" Standard ROM
+*Font ZapfDingbats: Special "(001.005)" Special ROM
+*% End of seikol465.ppd, 07149 bytes.
