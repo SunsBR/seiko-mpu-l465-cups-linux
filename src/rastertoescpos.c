@@ -4,6 +4,83 @@
 #include <cups/cups.h>
 #include <cups/raster.h>
 
+
+//#include <stdlib.h>
+//#include <string.h>
+
+void dither_stucki_image(const unsigned char *src_image, unsigned char *dst_image, 
+                         int width, int height, size_t src_bytes_per_line) 
+{
+    size_t dst_bytes_per_line = (width + 7) / 8;
+
+    // Allocate error rows ONCE for the entire image session
+    float *err_row0 = (float *)calloc(width + 4, sizeof(float));
+    float *err_row1 = (float *)calloc(width + 4, sizeof(float));
+    float *err_row2 = (float *)calloc(width + 4, sizeof(float));
+
+    if (!err_row0 || !err_row1 || !err_row2) {
+        free(err_row0); free(err_row1); free(err_row2);
+        return;
+    }
+
+    for (int y = 0; y < height; y++) {
+        const unsigned char *src_row = src_image + (y * src_bytes_per_line);
+        unsigned char *dst_row = dst_image + (y * dst_bytes_per_line);
+
+        for (int x = 0; x < width; x++) {
+            int err_idx = x + 2; // Offset by 2 for edge conditions
+
+            float old_val = (float)src_row[x] + err_row0[err_idx];
+
+            // Clamp pixel value
+            if (old_val < 0.0f) old_val = 0.0f;
+            if (old_val > 255.0f) old_val = 255.0f;
+
+            // Thresholding: 0 = Black, 255 = White
+            unsigned char new_val = (old_val < 128.0f) ? 0 : 255;
+
+            // Pack 1-bit output
+            if (new_val != 0) { //change polarity of the image
+                dst_row[x / 8] |= (1 << (7 - (x % 8)));
+            }
+
+            // Calculate error and distribute using Stucki weights
+            float error = old_val - (float)new_val;
+            float e = error / 42.0f;
+
+            // Current row (+0)
+            err_row0[err_idx + 1] += e * 8.0f;
+            err_row0[err_idx + 2] += e * 4.0f;
+
+            // Next row (+1)
+            err_row1[err_idx - 2] += e * 2.0f;
+            err_row1[err_idx - 1] += e * 4.0f;
+            err_row1[err_idx]     += e * 8.0f;
+            err_row1[err_idx + 1] += e * 4.0f;
+            err_row1[err_idx + 2] += e * 2.0f;
+
+            // Row (+2)
+            err_row2[err_idx - 2] += e * 1.0f;
+            err_row2[err_idx - 1] += e * 2.0f;
+            err_row2[err_idx]     += e * 4.0f;
+            err_row2[err_idx + 1] += e * 2.0f;
+            err_row2[err_idx + 2] += e * 1.0f;
+        }
+
+        // Shift error rows down for the next line
+        float *tmp = err_row0;
+        err_row0 = err_row1;
+        err_row1 = err_row2;
+        err_row2 = tmp;
+        memset(err_row2, 0, (width + 4) * sizeof(float));
+    }
+
+    // Free buffers at the end of the full image
+    free(err_row0);
+    free(err_row1);
+    free(err_row2);
+}
+
 // Original initialization sequence from png2escpos (completely untouched)
 unsigned char init_seq[] = {
     0x1b, 0x3d, 0x01,       // ESC = 0x01  -> Select Peripheral Device (Enable printer)
@@ -23,6 +100,8 @@ unsigned char init_seq[] = {
 
 // Original footer sequence from png2escpos (completely untouched)
 unsigned char footer[] = { 0x0c, 0x1d, 0x0c, 0x1d, 0x56, 0x00, 0x12, 0x3f };
+// Modified footer: Removes the Form Feed and Tear-Feed instructions
+//unsigned char footer[] = { 0x1D, 0x0C, 0x12, 0x3F };
 
 // Your original find_real_height function
 unsigned int find_real_height(unsigned char *image_data, unsigned int width, unsigned int height, cups_page_header2_t *header) {
@@ -106,6 +185,28 @@ int main(int argc, char *argv[]) {
                 break; // Stream ended early
             }
             actual_rows_read++;
+        }
+
+// 2.5  - Added step - Convert 8-bit grayscale to 1-bit in-place using Stucki dithering upfront
+        if (header.cupsBitsPerColor == 8) {
+            unsigned int packed_bytes_per_line = (width + 7) / 8;
+            unsigned char *dithered_data = calloc(1, packed_bytes_per_line * actual_rows_read);
+
+            if (dithered_data) {
+                // Process the FULL image in a single pass
+                dither_stucki_image(image_data, dithered_data, width, actual_rows_read, cups_bytes_per_line);
+
+                // Replace image buffer with dithered 1-bit data
+                free(image_data);
+                image_data = dithered_data;
+
+                // Adjust header properties to reflect 1-bit monochrome stream
+                cups_bytes_per_line = packed_bytes_per_line;
+                header.cupsBytesPerLine = packed_bytes_per_line;
+                header.cupsBitsPerColor = 1;
+                header.cupsBitsPerPixel = 1;
+                header.cupsColorSpace = CUPS_CSPACE_K;
+            }
         }
 
         // 3. Find the real content height up to what we actually read

@@ -41,8 +41,12 @@ Filter application/vnd.cups-raster 0 rastertoescpos
   CustomMedia "Roll112mm/112mm Roll (1248px x 3165px Max)" 300 759.6 0 0 0 0 "<</PageSize[300 759.6]>>setpagedevice" "<</PageSize[300 759.6]>>setpagedevice"
   *CustomMedia "Roll115mm/115mm Roll (Max 1280px x 3165px Max)" 307 759.6 0 0 0 0 "<</PageSize[307 759.6]>>setpagedevice" "<</PageSize[307 759.6]>>setpagedevice"
 
+  // Force Default ColorSpace to Gray
+  Attribute "DefaultColorSpace" "" "Gray"
+
+  *Resolution k 8 1 0 0 "300dpi/300 DPI Gray"
   // Resolution setting forced to output 1-bit Grayscale (Dithered Black & White)
-  *Resolution k 1 1 0 0 "300dpi/300 DPI Black & White"
+  Resolution k 1 1 0 0 "300dpi/300 DPI Black & White"
 
   // USB Auto-detection & Device IDs
   Attribute "1284DeviceID" "" "MFG:Seiko Instruments;MDL:SII MPU-L465;"
