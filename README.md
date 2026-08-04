@@ -49,10 +49,9 @@ The printer definition file (`seikol465.drv` / PPD) pre-defines the following pa
 
 ## Known Issues & Help Wanted
 
-> ⚠️ **Known Bug — Multi-Chunk Gap (2–3mm)**
-> When printing long pages that exceed the `chunk_max_height` threshold (3000 pixels), the driver finishes the current page mode section and re-initializes the next chunk. During this transition between page mode finishes (`FF`) and restarts, the physical printer advances the paper slightly, causing an unintended **2mm to 3mm horizontal gap** in the printout.
+> ⚠️ **Known Bug — Multi-Chunk Gap (2–3mm)** - FIXED!!
 > 
-> **Contributions and pull requests to help solve this page-mode transition feed issue are highly welcome!**
+> **Contributions and pull requests to help solve bugs are highly welcome!**
 
 ---
 
@@ -60,7 +59,7 @@ The printer definition file (`seikol465.drv` / PPD) pre-defines the following pa
 
 Contributions are welcome! Specifically looking for help in the following areas:
 
-* [ ] **Fixing the multi-chunk paper gap bug** on long documents.
+* [X] **Fixing the multi-chunk paper gap bug** on long documents. - DONE
 * [ ] **Printer-App / IPP Everywhere Migration:** Converting this driver from a legacy CUPS filter to a modern **Printer Application** (using `libprinterdriver` or `PAPPL`) for IPP Everywhere compatibility.
 * [ ] Refining hardware-level ESC/POS / DC2 initialization flags for specific hardware revisions.
 
