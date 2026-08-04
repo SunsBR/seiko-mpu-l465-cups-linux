@@ -99,9 +99,59 @@ unsigned char init_seq[] = {
 };
 
 // Original footer sequence from png2escpos (completely untouched)
-unsigned char footer[] = { 0x0c, 0x1d, 0x0c, 0x1d, 0x56, 0x00, 0x12, 0x3f };
+//unsigned char footer[] = { 0x0c, 0x1d, 0x0c, 0x1d, 0x56, 0x00, 0x12, 0x3f };
 // Modified footer: Removes the Form Feed and Tear-Feed instructions
 //unsigned char footer[] = { 0x1D, 0x0C, 0x12, 0x3F };
+
+// -----------------------------------------------------------------------------
+// Standalone / Final Page ESC/POS Footer (For Seiko MPU-L465)
+// -----------------------------------------------------------------------------
+// Purpose: Renders Page Mode graphics, feeds paper to the mark/cut position,
+//          executes a full paper cut, and queries the printer status.
+//
+// NOTE: This footer causes a ~1-2 mm paper feed (from GS FF) plus a ~10-15 mm
+//       feed (from GS V) to reach the physical cutter/tear bar. Use this ONLY
+//       at the end of a complete job, not between continuous pages.
+// -----------------------------------------------------------------------------
+
+unsigned char footer[] = {
+    // -------------------------------------------------------------------------
+    // 1. RENDER & EXIT PAGE MODE
+    // -------------------------------------------------------------------------
+    // Command: FF (Form Feed)
+    // - Action: Flushes all buffered graphic/raster data onto the paper.
+    // - Memory: Clears the internal Page Mode buffer.
+    // - State:  Transitions printer from Page Mode back to Standard Mode.
+    0x0C,
+
+    // -------------------------------------------------------------------------
+    // 2. MARK INDEXING / LABEL ALIGNMENT
+    // -------------------------------------------------------------------------
+    // Command: GS FF (Print and Feed in Page Mode / Mark Detect)
+    // - Action: Now that we are in Standard Mode, this advances paper to the
+    //           next black mark or default label boundary index.
+    // - PAPER MOVEMENT: Primary cause of the 1-2 mm gap between print blocks.
+//    0x1D, 0x0C,
+
+    // -------------------------------------------------------------------------
+    // 3. FULL PAPER CUT (WITH AUTOMATIC ADVANCE)
+    // -------------------------------------------------------------------------
+    // Command: GS V 0 (Select Cut Mode and Cut Paper - Function 0: Full Cut)
+    // - Action: Triggers the paper cutter mechanism.
+    // - PAPER MOVEMENT: The printer automatically feeds paper forward by the
+    //   exact physical distance between the print head and the cutter blade 
+    //   so the image is not cut off.
+//    0x1D, 0x56, 0x00,
+
+    // -------------------------------------------------------------------------
+    // 4. REAL-TIME STATUS QUERY (Seiko SII Specific)
+    // -------------------------------------------------------------------------
+    // Command: DC2 ? (Device Control 2 + ASCII '?')
+    // - Action: Requests immediate printer status (battery, paper sensor, buffer).
+    // - Host Sync: Ensures host software knows the job has finished printing.
+    // - PAPER MOVEMENT: 0 mm (purely software/bus communication).
+    0x12, 0x3F
+};
 
 // Your original find_real_height function
 unsigned int find_real_height(unsigned char *image_data, unsigned int width, unsigned int height, cups_page_header2_t *header) {
@@ -162,7 +212,7 @@ int main(int argc, char *argv[]) {
     }
 
     cups_page_header2_t header;
-    unsigned int chunk_max_height = 3000;
+    unsigned int chunk_max_height = 3164; //3165; //3000 old
 
     while (cupsRasterReadHeader2(ras, &header)) {
         if (header.cupsWidth == 0 || header.cupsHeight == 0) continue;
